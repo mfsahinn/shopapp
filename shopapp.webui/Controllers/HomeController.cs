@@ -10,11 +10,12 @@ namespace shopapp.webui.Controllers
     // localhost:5000/home
     public class HomeController : Controller
     {
-        public IProductRepository _productRepository;
+        private IProductRepository _productService;
 
-        public HomeController(IProductRepository productRepository)
+
+        public HomeController(IProductRepository productService)
         {
-            this._productRepository = productRepository;
+            this._productService = productService;
         }
 
 
@@ -22,9 +23,9 @@ namespace shopapp.webui.Controllers
 
         public IActionResult Index()
         {
-            var productViewModel = new ProductViewModel()
+            var productViewModel = new ProductListViewModel()
             {
-                Products = _productRepository.GetAll()
+                Products = _productService.GetAll()
 
             };
 

@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using shopapp.business.Abstract;
+using shopapp.business.Concrete;
 using shopapp.data.Abstract;
 using shopapp.data.Concrete.EfCore;
 
@@ -24,6 +26,10 @@ namespace shopapp.webui
             // razor page
             services.AddControllersWithViews();
             services.AddScoped<IProductRepository, EfCoreProductRepository>();
+            services.AddScoped<ICategoryRepository, EfCoreCategoryRepository>();
+
+            services.AddScoped<IProductService, ProductManager>();
+            services.AddScoped<ICategoryService, CategoryManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +46,7 @@ namespace shopapp.webui
 
             if (env.IsDevelopment())
             {
+                SeedDatabase.Seed();
                 app.UseDeveloperExceptionPage();
             }
 
